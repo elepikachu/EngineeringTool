@@ -20,4 +20,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main_view),
+    path('ikun', views.cxk_view),
+    path('choose', views.choose_view),
 ]

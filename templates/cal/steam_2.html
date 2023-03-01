@@ -2,7 +2,7 @@
 {% load static %}
 <html>
 <head>
-<title>{{ ver }}-随机选择器</title>
+<title>{{ ver }}-蒸汽计算器</title>
 <link rel="shortcut icon" href="{% static 'images/icon.ico' %}">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,6 +60,16 @@ body {
     flex-wrap: wrap;
 }
 
+.side {
+    flex: 20%;
+    background-image: url({% static 'images/babara.jpeg' %});
+    background-size: auto;
+    background-position: top;
+    padding: 20px;
+    line-height: 300%;
+    text-align: center;
+}
+
 .side h5 {
     font-size: 20px;
 }
@@ -68,39 +78,25 @@ body {
     font-size: 20px;
 }
 
+.side h5 {
+    font-size: 20px;
+}
+
+.side a {
+    font-size: 20px;
+}
+
+
 /* 主要的内容区域 */
-.container {
+.main {
     -ms-flex: 70%; /* IE10 */
     flex: 70%;
-    height: 600px;
-    background-image:  url({% static 'images/bubble.jpg' %});
-    background-size: 80%;
+    background-image: url({% static 'images/kuailong.png' %});
+    background-position: top;
     padding: 20px;
+    text-align: center;
 }
 
-#textarea{
-    border:none;
-    display: block;
-    width:100%;
-    height:100px;
-    font-size:16px;
-    margin:0 0 20px;
-    padding: 10px;
-}
-
-.tag{
-    background-color: powderblue;
-    color:#fff;
-    border-radius: 50px;
-    padding:10px 20px;
-    margin:0 5px 10px 0;
-    font-size: 14px;
-    display: inline-block;
-}
-
-.highlight{
-    background-color: #273c75;
-}
 
 /* 底部 */
 .footer {
@@ -128,8 +124,8 @@ body {
 <body>
 
 <div class="header">
-  <h1>{{ ver }}-随机选择器</h1>
-  <p>Choose whatever you want</p>
+  <h1>{{ ver }}-蒸汽计算器</h1>
+  <p>Welcome to elepikachu's tool site</p>
 </div>
 
 <div class="navbar">
@@ -137,16 +133,25 @@ body {
 </div>
 
 <div class="row">
-  <div class="container">
-      <p>
-      请输入要选择的东西，以中文逗号隔开（例：麦当劳，肯德基，必胜客）输入完成后按回车确认，让选择器帮你做出选择
-      </p>
-          <textarea placeholder="enter your choice here.." id="textarea"></textarea>
-      <div id="tags">
-          <span class="tag">选项1</span>
-          <span class="tag">选项2</span>
-          <span class="tag">选项3</span>
-      </div>
+    <div class="side">
+        <a href="steam">重新计算</a><br />
+    </div>
+  <div class="main">
+     <b>计算完成</b><br />
+      Region number: {{ z }}<br />
+      {% if z != 0 %}
+      Specific volume{{ v }}: [m³/kg]<br />
+      Specific enthalpy{{ h }}: [kJ/kg]<br />
+      Specific entropy{{ s }}: [kJ/kgK]<br />
+      Specific isobaric heat capacity: {{ cp }}[kJ/kgK]<br />
+      Specific isocoric heat capacity: {{ cv }}[kJ/kgK]<br />
+      Speed of sound{{ w }}: [m/s]<br />
+      Cubic expansion coefficient: {{ alfav }}[1/K]<br />
+      Isothermal compressibility: {{ kt }}[1/K]<br />
+      蒸汽热量： {{ water_H }}[GJ]<br />
+      {% else %}
+          数据错误，请检查后重新计算
+      {% endif %}
   </div>
 </div>
 

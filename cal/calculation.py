@@ -1,0 +1,51 @@
+# using lambda instead of functions to make the use of buttons more clear
+# Entry Widgets to show calculations
+# unit area
+
+
+calculation_frame = LabelFrame(small_tools_background, text="迷你计算器", width=380, height=380, borderwidth=3, font=('宋体', 10, 'bold'),
+                    fg='#248aa2')
+calculation_frame.place(x=2, y=130+130)
+#
+inp = Entry(calculation_frame, width=35, borderwidth=3, relief=RIDGE)
+inp.grid(pady=10, row=0, sticky="w", padx=15)
+
+
+clear = Button(calculation_frame, text="C", width=2, command=lambda: inp.delete(0, "end"), bg="red", fg="white", relief=RIDGE)
+clear.grid(row=0, sticky="w", column = 1)
+nine = Button(calculation_frame,text="9", width=2, command=lambda: inp.insert("end", "9"), borderwidth=3, relief=RIDGE)
+nine.grid(row=1, sticky="w", padx=15)
+eight = Button(calculation_frame, text="8", width=2, command=lambda: inp.insert("end", "8"), borderwidth=3, relief=RIDGE)
+eight.grid(row=1, sticky="w", padx=45)
+seven = Button(calculation_frame, text="7", width=2, command=lambda: inp.insert("end", "7"), borderwidth=3, relief=RIDGE)
+seven.grid(row=1, sticky="w", padx=75)
+plus = Button(calculation_frame, text="+", width=2, command=lambda: inp.insert("end", "+"), borderwidth=3, relief=RIDGE)
+plus.grid(row=1, sticky="e", padx=125)
+six = Button(calculation_frame, text="6", width=2, command=lambda: inp.insert("end", "6"), borderwidth=3, relief=RIDGE)
+six.grid(row=2, sticky="w", padx=15, pady=5)
+five = Button(calculation_frame, text="5", width=2, command=lambda: inp.insert("end", "5"), borderwidth=3, relief=RIDGE)
+five.grid(row=2, sticky="w", padx=45, pady=5)
+four = Button(calculation_frame, text="4", width=2, command=lambda: inp.insert("end", "4"), borderwidth=3, relief=RIDGE)
+four.grid(row=2, sticky="w", padx=75, pady=5)
+minus = Button(calculation_frame, text="-", width=2, command=lambda: inp.insert("end", "-"), borderwidth=3, relief=RIDGE)
+minus.grid(row=2, sticky="e", padx=125, pady=5)
+three = Button(calculation_frame, text="3", width=2, command=lambda: inp.insert("end", "3"), borderwidth=3, relief=RIDGE)
+three.grid(row=3, sticky="w", padx=15, pady=5)
+two = Button(calculation_frame, text="2", width=2, command=lambda: inp.insert("end", "2"), borderwidth=3, relief=RIDGE)
+two.grid(row=3, sticky="w", padx=45, pady=5)
+one = Button(calculation_frame, text="1", width=2, command=lambda: inp.insert("end", "1"), borderwidth=3, relief=RIDGE)
+one.grid(row=3, sticky="w", padx=75, pady=5)
+multiply = Button(calculation_frame, text="*", width=2, command=lambda: inp.insert("end", "*"), borderwidth=3, relief=RIDGE)
+multiply.grid(row=3, sticky="e", padx=125, pady=5)
+zero = Button(calculation_frame, text="0", width=2, command=lambda: inp.insert("end", "0"), borderwidth=3, relief=RIDGE)
+zero.grid(row=4, sticky="w", padx=15, pady=5)
+double_zero = Button(calculation_frame,text="00", width=2, command=lambda: inp.insert("end", "00"), borderwidth=3, relief=RIDGE)
+double_zero.grid(row=4, sticky="w", padx=45, pady=5)
+dot = Button(calculation_frame, text=".", width=2, command=lambda: inp.insert("end", "."), borderwidth=3, relief=RIDGE)
+dot.grid(row=4, sticky="w", padx=75, pady=5)
+divide = Button(calculation_frame, text="/", width=2, command=lambda: inp.insert("end", "/"), borderwidth=3, relief=RIDGE)
+divide.grid(row=4, sticky="e", padx=125, pady=5)
+result = Button(calculation_frame, text="=", width=10, command=result, bg="red", fg="white", borderwidth=3, relief=RIDGE)
+result.grid(row=5, sticky="w", padx=15, pady=5)
+modulus = Button(calculation_frame, text="%", width=2, command=lambda: inp.insert("end", "%"), borderwidth=3, relief=RIDGE)
+modulus.grid(row=5, sticky="e", padx=125, pady=5)

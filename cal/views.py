@@ -22,3 +22,8 @@ def steam_view(request):
             dic.update(res)
             print(dic)
             return render(request, 'cal/steam.html', dic)
+
+
+def calculator_view(request):
+    dic = {'ver': VERSION}
+    return render(request, 'cal/cal.html', dic)

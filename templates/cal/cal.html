@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<title>{{ ver }}-蒸汽计算器</title>
+<link rel="shortcut icon" href="{% static 'images/icon.ico' %}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+    box-sizing: border-box;
+}
+
+/* body 样式 */
+body {
+    font-family: Arial;
+    margin: 0;
+}
+
+/* 标题 */
+.header {
+    padding: 30px;
+    text-align: center;
+    background: darkgray;
+    color: white;
+}
+
+/* 标题字体加大 */
+.header h1 {
+    font-size: 40px;
+}
+
+/* 导航 */
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* 导航栏样式 */
+.navbar a {
+    float: bottom;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+/* 鼠标移动到链接的颜色 */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* 列容器 */
+.row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+}
+
+.side {
+    flex: 20%;
+    background-image: url({% static 'images/babara.jpeg' %});
+    background-position: top;
+    padding: 20px;
+    line-height: 300%;
+    text-align: center;
+}
+
+.side h5 {
+    font-size: 20px;
+}
+
+.side a {
+    font-size: 20px;
+}
+
+.side h5 {
+    font-size: 20px;
+}
+
+.side a {
+    font-size: 20px;
+}
+
+.rrs {
+    width: 198px;
+    height: 50px;
+    border: 1px solid black;
+    border-bottom: none;
+    position: relative;
+}
+
+#result {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+
+/* 主要的内容区域 */
+.main {
+    -ms-flex: 70%; /* IE10 */
+    flex: 70%;
+    background-image: url({% static 'images/kuailong.png' %});
+    background-position: top;
+    padding: 20px;
+    text-align: center;
+}
+
+
+/* 底部 */
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+}
+
+/* 响应式布局 - 在屏幕设备宽度尺寸小于 700px 时, 让两栏上下堆叠显示 */
+@media screen and (max-width: 700px) {
+    .row {
+        flex-direction: column;
+    }
+}
+
+/* 响应式布局 - 在屏幕设备宽度尺寸小于 400px 时, 让导航栏目上下堆叠显示 */
+@media screen and (max-width: 400px) {
+    .navbar a {
+        float: none;
+        width: 100%;
+    }
+}
+</style>
+<script type="text/javascript">
+    //div块元素
+var result;
+//是否进行了运算
+var equal = false;
+window.onload = function(){
+	result  = document.getElementById("result");
+	result.innerHTML = "";
+}
+//如果进行了运算，下次输入数前进行清零
+function isEqual(){
+	if (equal){
+		c();
+		equal = false;
+	}
+}
+
+function pn(n){
+	isEqual();
+	result.innerHTML += n;
+}
+
+function po(o){
+	result.innerHTML += o;
+	equal = false;
+}
+
+function leftBracket(){
+	isEqual();
+	var r = result.innerHTML;
+	var c = r.charAt(r.length - 1);
+	if ("0" <= c && c <= "9" || c === "%"){
+		po("×");
+	}
+	result.innerHTML += "(";
+}
+
+function rightBracket(){
+	isEqual();
+	result.innerHTML += ")"
+}
+
+function ppow(){
+	isEqual();
+	result.innerHTML += "^"
+}
+
+function psqrt(){
+	isEqual();
+	var r = result.innerHTML;
+	var c = r.charAt(r.length - 1);
+	if ("0" <= c && c <= "9" || c == "%"){
+		po("×");
+	}
+	result.innerHTML += "√";
+}
+
+function c(){
+	result.innerHTML = "";
+}
+
+function backspace(){
+	var r = result.innerHTML;
+	result.innerHTML = r.substr(0,r.length - 1);
+	isEqual();
+}
+
+function equals1(){
+	equal = true;
+	var r = result.innerHTML;
+	//将特殊字符进行替换
+	r = r.replace(/×/g,"*");
+	r = r.replace(/÷/g,"/");
+	r = r.replace(/%/g,"*0.01");
+	try{
+        r = pow(r);
+	    r = sqrt(r);
+		result.innerHTML=eval(r);
+	}catch(e){
+		result.innerHTML="表达式不正确";
+	}
+}
+
+function pow(r){
+	var arr = r.split("^");
+	if (arr.length == 1){
+		return r;
+	}
+	var leftstr = leftOperation(arr[0]);
+	var rightstr = rightOperation(arr[1]);
+	var num =  "Math.pow(" + leftstr + "," + rightstr + ")";
+	var leftr = arr[0].substring(0,arr[0].length - leftstr.length);
+	var rightr = arr[1].substring(rightstr.length,arr[1].length);
+	var r = leftr + num + rightr;
+	return pow(r);
+}
+
+function sqrt(r){
+	if (r.indexOf("√") == -1){
+		return r;
+	}
+	var arr = r.split("√");
+	var rightstr = rightOperation(arr[1]);
+	var num = "Math.sqrt(" + rightstr + ")";
+	var leftr = arr[0];
+	var rightr = arr[1].substring(rightstr.length,arr[1].length);
+	var r =leftr + num + rightr;
+	return sqrt(r);
+}
+
+function leftOperation(r){
+	var leftBracket = 0;
+	var rightBracket = 0;
+	var i;
+	for (i = r.length - 1; i >=0; i--){
+		var c = r.charAt(i);
+		if (c == ")"){
+			rightBracket++;
+		} else if (leftBracket == rightBracket && c >="0" && c <= "9"){
+			break;
+		} else if (c == "("){
+			leftBracket++;
+		}
+	}
+	return r.substring(i);
+}
+
+function rightOperation(r){
+	var leftBracket = 0;
+	var rightBracket = 0;
+	var i;
+	for (i = 0; i <  r.length; i++){
+		var c = r.charAt(i);
+		if (c == "("){
+			leftBracket++;
+		} else if (leftBracket == rightBracket && c >="0" && c <= "9"){
+			break;
+		} else if (c == ")"){
+			rightBracket++;
+		}
+	}
+	return r.substring(0,i+1);
+}
+</script>
+</head>
+<body>
+<form action="/cal/steam" method="post">
+    {% csrf_token %}
+<div class="header">
+  <h1>{{ ver }}-蒸汽计算器</h1>
+  <p>Welcome to steam calculator</p>
+</div>
+
+<div class="navbar">
+  <a href="/">返回首页</a>
+</div>
+
+<div class="row">
+    <div class="side">
+        <a href="steam">蒸汽计算器</a><br />
+        <a href="#">含碳量缺省值计算器</a><br />
+        <a href="calculator">迷你计算器</a><br />
+    </div>
+  <div class="main">
+      <div class="rrs">
+		<span id="result"></span>
+	</div>
+	<table border="1px"  width="200px" height="300px">
+		<tbody align="center">
+			<tr>
+				<td width="50px" onclick="leftBracket()">(</td>
+				<td width="50px" onclick="rightBracket()">)</td>
+				<td width="50px" onclick="ppow()">^</td>
+				<td width="50px" onclick="psqrt()">√</td>
+			</tr>
+			<tr>
+				<td onclick="c()">C</td>
+				<td onclick="po('%')">%</td>
+				<td width="50px" onclick="backspace()"><img src="{% static 'images/back.png' %}" width="25px"/></td>
+				<td onclick="po('÷')">÷</td>
+			</tr>
+			<tr>
+				<td onclick="pn(7)">7</td>
+				<td onclick="pn(8)">8</td>
+				<td onclick="pn(9)">9</td>
+				<td onclick="po('×')">×</td>
+			</tr>
+			<tr>
+				<td onclick="pn(4)">4</td>
+				<td onclick="pn(5)">5</td>
+				<td onclick="pn(6)">6</td>
+				<td onclick="po('-')">-</td>
+			</tr>
+			<tr>
+				<td onclick="pn(1)">1</td>
+				<td onclick="pn(2)">2</td>
+				<td onclick="pn(3)">3</td>
+				<td onclick="po('+')">+</td>
+			</tr>
+			<tr>
+				<td onclick="pn('00')">00</td>
+				<td onclick="pn(0)">0</td>
+				<td onclick="pn('.')">.</td>
+				<td onclick="equals1()">=</td>
+			</tr>
+		</tbody>
+	</table>
+  </div>
+</div>
+
+<div class="footer">
+  <h2>
+      <h2>
+      <a href="http://www.sinopec.com/">
+      <img src="{% static 'images/sinopec.jpeg' %}" width="60px" height="50px" align="center">
+      </a>
+      Copyright Sinopec &nbsp;&nbsp;&nbsp;&nbsp; All Right Reserved
+      <a href="ikun">
+      <img src="{% static 'images/basketb.jpeg' %}" width="50px" height="50px" align="center">
+      </a>
+  </h2>
+  </h2>
+</div>
+</form>
+</body>
+</html>

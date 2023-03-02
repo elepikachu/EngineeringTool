@@ -120,19 +120,29 @@ body {
 }
 </style>
 <script type="text/javascript">
-    let stm = document.querySelector('#stm');
-    let sbm = document.querySelector('#cal')
-    stm.addEventListener('keyup', (e)=>{
-    createTags(e.target.value)
+    window.onload=function() {
+        let stm = document.querySelector('#stm');
+        let sbm = document.querySelector('#cal');
+        stm.addEventListener('keyup', (e) => {
+            createTags(e.target.value)
 
-    if(e.key == 'Enter') {
-        setTimeout(() => {
-            e.target.value = ''
-        },10)
+            if (e.key == 'Enter') {
+                setTimeout(() => {
+                    e.target.value = ''
+                }, 10)
 
-        sbm.click()
+                sbm.click()
+            }
+        })
+        let uni = document.querySelector('#uni');
+        let res = document.querySelector('#res');
+        let dic = {'J':1000000000, 'kJ':1000000, 'MJ':1000, 'GJ':1}
+        uni.addEventListener('change', function () {
+            console.log(uni.options[uni.selectedIndex].value)
+            var cal_res = {{ water_H }} * (dic[uni.options[uni.selectedIndex].value]);
+            res.innerHTML = '蒸汽热量：&nbsp;' + cal_res + '[' + uni.options[uni.selectedIndex].value + ']';
+        })
     }
-})
     function check_submit() {
         let prs = document.querySelector('#prs');
         let tmp = document.querySelector('#tmp');
@@ -170,7 +180,7 @@ body {
     {% csrf_token %}
 <div class="header">
   <h1>{{ ver }}-蒸汽计算器</h1>
-  <p>Welcome to elepikachu's tool site</p>
+  <p>Welcome to steam calculator</p>
 </div>
 
 <div class="navbar">
@@ -202,12 +212,42 @@ body {
       <br /><br /><br />
       <input type="reset" name="res" size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type="submit" value="计算热量" onclick="return check_submit()" name="cal" id="cal" size="5">
+      {% if res == True %}
+      <br /><br /><b>计算完成</b><br /><br />
+      Region number: {{ z }}<br />
+      {% if z != 0 %}
+      Specific volume:&nbsp;{{ v }}[m³/kg]<br />
+      Specific enthalpy:&nbsp;{{ h }}[kJ/kg]<br />
+      Specific entropy:&nbsp;{{ s }}[kJ/kgK]<br />
+      Specific isobaric heat capacity:&nbsp;{{ cp }}[kJ/kgK]<br />
+      Specific isocoric heat capacity:&nbsp;{{ cv }}[kJ/kgK]<br />
+      Speed of sound{{ w }}:&nbsp;[m/s]<br />
+      Cubic expansion coefficient:&nbsp;{{ alfav }}[1/K]<br />
+      Isothermal compressibility:&nbsp;{{ kt }}[1/K]<br />
+      <p id="res">蒸汽热量：&nbsp;{{ water_H }} [GJ]</p>单位换算：<select id="uni">
+              <option>J</option>
+              <option>kJ</option>
+              <option>MJ</option>
+              <option selected="selected">GJ</option>
+          </select><br />
+      {% else %}
+          数据错误，请检查后重新计算
+      {% endif %}
+      {% endif %}
   </div>
 </div>
 
 <div class="footer">
   <h2>
-      powered by elepikachu
+      <h2>
+      <a href="http://www.sinopec.com/">
+      <img src="{% static 'images/sinopec.jpeg' %}" width="60px" height="50px" align="center">
+      </a>
+      Copyright Sinopec &nbsp;&nbsp;&nbsp;&nbsp; All Right Reserved
+      <a href="ikun">
+      <img src="{% static 'images/basketb.jpeg' %}" width="50px" height="50px" align="center">
+      </a>
+  </h2>
   </h2>
 </div>
 </form>

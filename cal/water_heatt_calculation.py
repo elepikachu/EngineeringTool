@@ -7,6 +7,7 @@ class WaterHeatCalculation:
         P = float(water_pressure_q / 1000000) # pa
         T = float(water_tempeature_q) # K
         M = float(water_mass_q) # 万吨/年
+        print(P,T,M)
 
         res = {}
 

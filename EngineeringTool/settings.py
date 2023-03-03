@@ -1,3 +1,7 @@
+# -------------------------------------------------------------
+# EngineeringTool/settIng.py
+# django配置
+# -------------------------------------------------------------
 """
 Django settings for EngineeringTool project.
 

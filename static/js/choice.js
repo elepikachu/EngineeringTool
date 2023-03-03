@@ -1,6 +1,5 @@
 /*
  * Random Selector Code
- * Copyright: PetroChina
  */
 
 const tagsEl = document.getElementById('tags')

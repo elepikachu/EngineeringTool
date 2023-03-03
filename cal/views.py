@@ -1,3 +1,7 @@
+# -------------------------------------------------------------
+# cal/views.py
+# 计算器功能视图函数
+# -------------------------------------------------------------
 from django.shortcuts import render
 from .calculation import CalculationFunc
 
@@ -5,7 +9,11 @@ VERSION = 'Engineering Toolbox 1.0.0'
 DIC_PRS = {'Pa': 1, 'kPa': 1000, 'MPa': 1000000, 'atm': 101325}
 DIC_TMP = {'K': 0, 'C': 273.15}
 
-# Create your views here.
+
+# -------------------------------------------------------------
+# 函数名： steam_view
+# 功能： 蒸汽计算器
+# -------------------------------------------------------------
 def steam_view(request):
     if request.method == 'GET':
         dic = {'ver': VERSION, 'res': False}
@@ -24,6 +32,10 @@ def steam_view(request):
             return render(request, 'cal/steam.html', dic)
 
 
+# -------------------------------------------------------------
+# 函数名： carbon_view
+# 功能： 碳缺省值计算器
+# -------------------------------------------------------------
 def carbon_view(request):
     if request.method == 'GET':
         dic = {'ver': VERSION, 'res': False}
@@ -37,6 +49,10 @@ def carbon_view(request):
             return render(request, 'cal/carb.html', dic)
 
 
+# -------------------------------------------------------------
+# 函数名： calculator_view
+# 功能： 迷你计算器
+# -------------------------------------------------------------
 def calculator_view(request):
     dic = {'ver': VERSION}
     return render(request, 'cal/cal.html', dic)

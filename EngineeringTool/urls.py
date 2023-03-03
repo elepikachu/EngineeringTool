@@ -1,3 +1,7 @@
+# -------------------------------------------------------------
+# EngineeringTool/url.py
+# 总url声明
+# -------------------------------------------------------------
 """EngineeringTool URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -23,4 +27,5 @@ urlpatterns = [
     path('ikun', views.cxk_view),
     path('choose', views.choose_view),
     path('cal/', include('cal.urls')),
+    path('robots.txt', views.robots_txt),
 ]

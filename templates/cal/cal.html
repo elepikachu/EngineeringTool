@@ -2,7 +2,7 @@
 {% load static %}
 <html>
 <head>
-<title>{{ ver }}-蒸汽计算器</title>
+<title>{{ ver }}-迷你计算器</title>
 <link rel="shortcut icon" href="{% static 'images/icon.ico' %}">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -282,8 +282,8 @@ function rightOperation(r){
 <form action="/cal/steam" method="post">
     {% csrf_token %}
 <div class="header">
-  <h1>{{ ver }}-蒸汽计算器</h1>
-  <p>Welcome to steam calculator</p>
+  <h1>{{ ver }}-迷你计算器</h1>
+  <p>Welcome to mini calculator</p>
 </div>
 
 <div class="navbar">
@@ -293,7 +293,7 @@ function rightOperation(r){
 <div class="row">
     <div class="side">
         <a href="steam">蒸汽计算器</a><br />
-        <a href="#">含碳量缺省值计算器</a><br />
+        <a href="carbon">含碳量缺省值计算器</a><br />
         <a href="calculator">迷你计算器</a><br />
     </div>
   <div class="main">

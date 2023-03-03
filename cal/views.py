@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .water_heatt_calculation import WaterHeatCalculation
+from .calculation import CalculationFunc
 
 VERSION = 'Engineering Toolbox 1.0.0'
 DIC_PRS = {'Pa': 1, 'kPa': 1000, 'MPa': 1000000, 'atm': 101325}
@@ -17,11 +17,24 @@ def steam_view(request):
             tmp = request.POST['tmp']
             tmp2 = float(tmp) + float(DIC_TMP[request.POST['utmp']])
             stm = request.POST['stm']
-            res = WaterHeatCalculation().water_func(prs2, tmp2, stm)
+            res = CalculationFunc().water_steam_cal(prs2, tmp2, stm)
             dic = {'ver': VERSION, 'res': True}
             dic.update(res)
             print(dic)
             return render(request, 'cal/steam.html', dic)
+
+
+def carbon_view(request):
+    if request.method == 'GET':
+        dic = {'ver': VERSION, 'res': False}
+        return render(request, 'cal/carb.html', dic)
+    elif request.method == 'POST':
+        if 'cal' in request.POST:
+            NCVi_q = request.POST['prs']
+            EFi_q = request.POST['tmp']
+            res = CalculationFunc().carbon_content_cal(NCVi_q, EFi_q)
+            dic = {'ver': VERSION, 'res': True, 'z': res}
+            return render(request, 'cal/carb.html', dic)
 
 
 def calculator_view(request):

@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     path('steam', views.steam_view),
-    path('calculator', views.calculator_view)
+    path('calculator', views.calculator_view),
+    path('carbon', views.carbon_view),
     ]

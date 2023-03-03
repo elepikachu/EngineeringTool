@@ -1,51 +1,100 @@
-# using lambda instead of functions to make the use of buttons more clear
-# Entry Widgets to show calculations
-# unit area
+from iapws import iapws97
 
 
-calculation_frame = LabelFrame(small_tools_background, text="迷你计算器", width=380, height=380, borderwidth=3, font=('宋体', 10, 'bold'),
-                    fg='#248aa2')
-calculation_frame.place(x=2, y=130+130)
-#
-inp = Entry(calculation_frame, width=35, borderwidth=3, relief=RIDGE)
-inp.grid(pady=10, row=0, sticky="w", padx=15)
+class CalculationFunc:
+    def water_steam_cal(self, water_pressure_q, water_tempeature_q, water_mass_q):
+
+        P = float(water_pressure_q / 1000000) # pa
+        T = float(water_tempeature_q) # K
+        M = float(water_mass_q) # 万吨/年
+        print(P,T,M)
+
+        res = {}
+
+        zone_number = iapws97._Bound_TP(T, P)
+
+        if zone_number == None:
+            res = {'z':0, 'v':0, 'h':0, 's':0, 'cp':0, 'cv':0, 'w':0, 'alfav':0, 'kt':0, 'water_H':0}
+        else :
+            if zone_number == 1:
+                a = iapws97._Region1(T, P)
+                v1 = a["v"]  # Specific volume, [m³/kg]
+                h1 = a["h"]  # Specific enthalpy, [kJ/kg]
+                s1 = a["s"]  # Specific entropy, [kJ/kgK]
+                cp1 = a["cp"]  # Specific isobaric heat capacity, [kJ/kgK]
+                cv1 = a["cv"]  # Specific isocoric heat capacity, [kJ/kgK]
+                w1 = a["w"]  # Speed of sound, [m/s]
+                alfav1 = a["alfav"]  # Cubic expansion coefficient, [1/K]
+                kt1 = a["kt"]  # Isothermal compressibility, [1/MPa]
+                water_H = (h1 - 83.74) * 0.001 * M *10000
+                res = {'z':1, 'v': v1, 'h': h1, 's': s1, 'cp': cp1, 'cv': cv1, 'w': w1, 'alfav': alfav1, 'kt': kt1,
+                       'water_H': water_H}
+            if zone_number == 2:
+                a = iapws97._Region2(T, P)
+                v2 = a["v"]  # Specific volume, [m³/kg]
+                h2 = a["h"]  # Specific enthalpy, [kJ/kg]
+                s2 = a["s"]  # Specific entropy, [kJ/kgK]
+                cp2 = a["cp"]  # Specific isobaric heat capacity, [kJ/kgK]
+                cv2 = a["cv"]  # Specific isocoric heat capacity, [kJ/kgK]
+                w2 = a["w"]  # Speed of sound, [m/s]
+                alfav2 = a["alfav"]  # Cubic expansion coefficient, [1/K]
+                kt2 = a["kt"]  # Isothermal compressibility, [1/MPa]
+                water_H = (h2 - 83.74) * 0.001 * M *10000
+                res = {'z': 1, 'v': v2, 'h': h2, 's': s2, 'cp': cp2, 'cv': cv2, 'w': w2, 'alfav': alfav2, 'kt': kt2,
+                       'water_H': water_H}
+
+        return res
 
 
-clear = Button(calculation_frame, text="C", width=2, command=lambda: inp.delete(0, "end"), bg="red", fg="white", relief=RIDGE)
-clear.grid(row=0, sticky="w", column = 1)
-nine = Button(calculation_frame,text="9", width=2, command=lambda: inp.insert("end", "9"), borderwidth=3, relief=RIDGE)
-nine.grid(row=1, sticky="w", padx=15)
-eight = Button(calculation_frame, text="8", width=2, command=lambda: inp.insert("end", "8"), borderwidth=3, relief=RIDGE)
-eight.grid(row=1, sticky="w", padx=45)
-seven = Button(calculation_frame, text="7", width=2, command=lambda: inp.insert("end", "7"), borderwidth=3, relief=RIDGE)
-seven.grid(row=1, sticky="w", padx=75)
-plus = Button(calculation_frame, text="+", width=2, command=lambda: inp.insert("end", "+"), borderwidth=3, relief=RIDGE)
-plus.grid(row=1, sticky="e", padx=125)
-six = Button(calculation_frame, text="6", width=2, command=lambda: inp.insert("end", "6"), borderwidth=3, relief=RIDGE)
-six.grid(row=2, sticky="w", padx=15, pady=5)
-five = Button(calculation_frame, text="5", width=2, command=lambda: inp.insert("end", "5"), borderwidth=3, relief=RIDGE)
-five.grid(row=2, sticky="w", padx=45, pady=5)
-four = Button(calculation_frame, text="4", width=2, command=lambda: inp.insert("end", "4"), borderwidth=3, relief=RIDGE)
-four.grid(row=2, sticky="w", padx=75, pady=5)
-minus = Button(calculation_frame, text="-", width=2, command=lambda: inp.insert("end", "-"), borderwidth=3, relief=RIDGE)
-minus.grid(row=2, sticky="e", padx=125, pady=5)
-three = Button(calculation_frame, text="3", width=2, command=lambda: inp.insert("end", "3"), borderwidth=3, relief=RIDGE)
-three.grid(row=3, sticky="w", padx=15, pady=5)
-two = Button(calculation_frame, text="2", width=2, command=lambda: inp.insert("end", "2"), borderwidth=3, relief=RIDGE)
-two.grid(row=3, sticky="w", padx=45, pady=5)
-one = Button(calculation_frame, text="1", width=2, command=lambda: inp.insert("end", "1"), borderwidth=3, relief=RIDGE)
-one.grid(row=3, sticky="w", padx=75, pady=5)
-multiply = Button(calculation_frame, text="*", width=2, command=lambda: inp.insert("end", "*"), borderwidth=3, relief=RIDGE)
-multiply.grid(row=3, sticky="e", padx=125, pady=5)
-zero = Button(calculation_frame, text="0", width=2, command=lambda: inp.insert("end", "0"), borderwidth=3, relief=RIDGE)
-zero.grid(row=4, sticky="w", padx=15, pady=5)
-double_zero = Button(calculation_frame,text="00", width=2, command=lambda: inp.insert("end", "00"), borderwidth=3, relief=RIDGE)
-double_zero.grid(row=4, sticky="w", padx=45, pady=5)
-dot = Button(calculation_frame, text=".", width=2, command=lambda: inp.insert("end", "."), borderwidth=3, relief=RIDGE)
-dot.grid(row=4, sticky="w", padx=75, pady=5)
-divide = Button(calculation_frame, text="/", width=2, command=lambda: inp.insert("end", "/"), borderwidth=3, relief=RIDGE)
-divide.grid(row=4, sticky="e", padx=125, pady=5)
-result = Button(calculation_frame, text="=", width=10, command=result, bg="red", fg="white", borderwidth=3, relief=RIDGE)
-result.grid(row=5, sticky="w", padx=15, pady=5)
-modulus = Button(calculation_frame, text="%", width=2, command=lambda: inp.insert("end", "%"), borderwidth=3, relief=RIDGE)
-modulus.grid(row=5, sticky="e", padx=125, pady=5)
+    def carbon_content_cal(self, NCVi_q, EFi_q):
+        NCVi = float(NCVi_q)
+        EFi = float(EFi_q)
+        CCi = NCVi * EFi
+        return CCi
+
+
+class UnitConvert:
+    def convert_ES(self, n, unit1, unit2):
+        c = [1000, 700]
+        l = ['千克标油', '千克标煤']
+        if unit1 not in l or unit2 not in l:
+            result = 0
+        else:
+            unit1_index = l.index(unit1)
+            unit2_index = l.index(unit2)
+            print(type(n))
+            print(n.get())
+            num=int(n.get())
+            result = num/c[unit1_index]*c[unit2_index]
+        return result
+
+    '''热量单位换算'''
+    def convert_E(self, n,unit1,unit2):
+        c = [0.2389, 1, 1000, 1000000, 1000000000, 1000000000000]
+        l = ['kcal', 'KJ', 'MJ', 'GJ', 'TJ']
+        if unit1 not in l or unit2 not in l:
+            result = 0
+        else:
+            unit1_index = l.index(unit1)
+            unit2_index = l.index(unit2)
+            print(type(n))
+            print(n.get())
+            num = int(n.get())
+            result = num / c[unit1_index] * c[unit2_index]
+        return result
+
+    '''长度单位换算'''
+    def convert_L(self, n,unit1,unit2):
+        c = [1000, 100, 10, 1, 0.001]
+        l = ['毫米', '厘米', '分米', '米', '千米' ]
+        if unit1 not in l or unit2 not in l:
+            result = 0
+        else:
+            unit1_index = l.index(unit1)
+            unit2_index = l.index(unit2)
+            print(type(n))
+            print(n.get())
+            num = int(n.get())
+            result = num / c[unit1_index] * c[unit2_index]
+        return result
+

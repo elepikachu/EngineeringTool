@@ -1,3 +1,7 @@
+# -------------------------------------------------------------
+# EngineeringTool/settIng.py
+# django配置
+# -------------------------------------------------------------
 """
 Django settings for EngineeringTool project.
 
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cal',
 ]
 
 MIDDLEWARE = [

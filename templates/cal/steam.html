@@ -124,8 +124,6 @@ body {
         let stm = document.querySelector('#stm');
         let sbm = document.querySelector('#cal');
         stm.addEventListener('keyup', (e) => {
-            createTags(e.target.value)
-
             if (e.key === 'Enter') {
                 setTimeout(() => {
                     e.target.value = ''

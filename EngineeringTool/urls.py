@@ -27,5 +27,6 @@ urlpatterns = [
     path('ikun', views.cxk_view),
     path('choose', views.choose_view),
     path('cal/', include('cal.urls')),
+    path('components/', include('components.urls')),
     path('robots.txt', views.robots_txt),
 ]

@@ -2,7 +2,7 @@
 {% load static %}
 <html>
 <head>
-<title>{{ ver }}-首页</title>
+<title>{{ ver }}-燃气组分计算-体积分数</title>
 <link rel="shortcut icon" href="{% static 'images/icon.ico' %}">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,18 +30,40 @@ body {
     font-size: 40px;
 }
 
+/* 导航 */
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* 导航栏样式 */
+.navbar a {
+    float: bottom;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+/* 鼠标移动到链接的颜色 */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
 
 /* 列容器 */
 .row {
+    display: -ms-flexbox; /* IE10 */
     display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
     flex-wrap: wrap;
 }
 
-/* 创建两个列 */
-/* 边栏 */
 .side {
     flex: 20%;
-    background-color: lightcyan;
+    background-image: url({% static 'images/babara.jpeg' %});
+    background-position: top;
     padding: 20px;
     line-height: 300%;
     text-align: center;
@@ -55,12 +77,23 @@ body {
     font-size: 20px;
 }
 
+.side h5 {
+    font-size: 20px;
+}
+
+.side a {
+    font-size: 20px;
+}
+
+
 /* 主要的内容区域 */
 .main {
+    -ms-flex: 70%; /* IE10 */
     flex: 70%;
-    height: 500px;
-    background-color: lightpink;
+    background-image: url({% static 'images/kuailong.png' %});
+    background-position: top;
     padding: 20px;
+    text-align: center;
 }
 
 
@@ -86,48 +119,47 @@ body {
     }
 }
 </style>
+<script type="text/javascript">
+</script>
 </head>
 <body>
-
+<form action="/components/volume" method="post">
+    {% csrf_token %}
 <div class="header">
-  <h1>{{ ver }}-首页</h1>
-  <p>Welcome to Engineering tool site</p>
+  <h1>{{ ver }}-燃气组分计算-体积分数</h1>
+  <p>Welcome to mass components calculation</p>
+</div>
+
+<div class="navbar">
+  <a href="/">返回首页</a>
 </div>
 
 <div class="row">
-  <div class="side">
-      <img src="{% static 'images/cheme.jpeg' %}" width="100px" height="100px" align="center">
-      <br />
-      <h5>***帮助***</h5>
-      以下为帮助内容
-  </div>
+    <div class="side">
+        <a href="mass">质量分数</a><br />
+        <a href="volume">体积分数</a><br />
+    </div>
   <div class="main">
-      <a href="cal/steam">计算器</a><br />
-      蒸汽热量计算，含碳量缺省值计算，迷你计算器<br />
-      <a href="components/mass">燃料气组分计算</a><br />
-      计算燃料气组分<br />
-      <a href="#">Tool3</a><br />
-      introduction<br />
-      <a href="#">Tool4</a><br />
-      introduction<br />
-      <a href="#">Tool5</a><br />
-      introduction<br />
-      <a href="choose">随机选择小工具</a><br />
-      请输入要选择的东西，以中文逗号隔开（例：麦当劳，肯德基，必胜客）输入完成后按回车确认，让选择器帮你做出选择.<br />
+      <p><b>请输入组分数，回车确认</b></p><br />
+      <br /><br /><br />
+      {% if res == True %}
+      <br /><br /><b>计算完成</b><br /><br />
+      CFI: {{ z }} 吨碳/吨(万Nm3)燃料<br /><br />
+      <img src="{% static 'images/carb.png' %}" width="600px"/>
+      {% endif %}
   </div>
 </div>
 
 <div class="footer">
   <h2>
+      <h2>
       <a href="http://www.sinopec.com/">
       <img src="{% static 'images/sinopec.jpeg' %}" width="60px" height="50px" align="center">
       </a>
       Copyright Sinopec &nbsp;&nbsp;&nbsp;&nbsp; All Right Reserved
-      <a href="ikun">
-      <img src="{% static 'images/basketb.jpeg' %}" width="50px" height="50px" align="center">
-      </a>
+  </h2>
   </h2>
 </div>
-
+</form>
 </body>
 </html>

@@ -3189,8 +3189,8 @@ def create_inputs():
         D = np.insert(b,0,c,axis = 1)
 
         list_percent = []
-        for i in D[:,0]:
-            single_percent = i/D[:,0][0]
+        for i in D[:, 0]:
+            single_percent = i/D[:, 0][0]
             list_percent.append(single_percent)
         list_percent = np.array(list_percent)
         E = np.insert(D,0,list_percent,axis = 1)

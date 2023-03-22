@@ -130,27 +130,31 @@ body {
             console.log(num)
             for (var i = 0; i < num; i++) {
                 afm.innerHTML += "<b>conpoment" + (i+1) + '</b><br/><br/>';
-                afm.innerHTML += "甲烷:<input name='c11" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "乙烷:<input name='c21" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "乙烯:<input name='c22" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "乙炔:<input name='c23" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "丙烷:<input name='c31" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "丙烯:<input name='c32" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "异丁烷:<input name='ic4" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "正丁烷:<input name='nc4" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "丁烯:<input name='c42" + i + "' type='input' style='width:50px'/><br /> ";
-                afm.innerHTML += "戊烷:<input name='c51" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "戊烯:<input name='c52" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "氢气:<input name='h2" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "水:<input name='h2o" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "硫化氢:<input name='h2s" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "氮气:<input name='n2" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "一氧化碳:<input name='co1" + i + "' type='input' style='width:50px'/> ";
-                afm.innerHTML += "二氧化碳:<input name='co2" + i + "' type='input' style='width:50px'/> ";
+                afm.innerHTML += "甲烷:<input name='c11" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "乙烷:<input name='c21" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "乙烯:<input name='c22" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "乙炔:<input name='c23" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "丙烷:<input name='c31" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "丙烯:<input name='c32" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "异丁烷:<input name='ic4" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "正丁烷:<input name='nc4" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "丁烯:<input name='c42" + i + "' type='input' value='0' style='width:50px'/><br /> ";
+                afm.innerHTML += "戊烷:<input name='c51" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "戊烯:<input name='c52" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "氢气:<input name='h2" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "水:<input name='h2o" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "硫化氢:<input name='h2s" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "氮气:<input name='n2" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "一氧化碳:<input name='co1" + i + "' type='input' value='0' style='width:50px'/> ";
+                afm.innerHTML += "二氧化碳:<input name='co2" + i + "' type='input' value='0' style='width:50px'/> ";
                 afm.innerHTML += "<br/><br/>";
             }
-            afm.innerHTML += "<input type='submit' value='计算' onclick='do_cal()' id='btn'>"
+            afm.innerHTML += "<input type='submit' value='计算' onclick='do_cal()' id='btn' name='btn'>"
 
+    }
+
+    function do_cal () {
+        return true;
     }
 </script>
 </head>
@@ -173,7 +177,7 @@ body {
     </div>
   <div class="main">
       <p><b>请输入组分数，点击确认键后在生成表单里填写信息</b></p><br />
-      <select id="num">
+      <select id="num" name="num">
               <option selected="selected">1</option>
               <option>2</option>
               <option>3</option>
@@ -190,12 +194,7 @@ body {
       <br /><br />
   <div class="aftermain">
   </div>
-      {% if res == True %}
-      <br /><br /><b>计算完成</b><br /><br />
-      CFI: {{ z }} 吨碳/吨(万Nm3)燃料<br /><br />
-      <img src="{% static 'images/carb.png' %}" width="600px"/>
-      {% endif %}
-  </div>
+</div>
 </div>
 
 <div class="footer">

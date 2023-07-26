@@ -8,5 +8,7 @@ from . import views
 
 urlpatterns = [
     path('mass', views.mass_view),
-    path('volume', views.volume_view)
+    path('volume', views.volume_view),
+    path('massup', views.mass_upload_view),
+    path('volumeup', views.volume_upload_view)
     ]

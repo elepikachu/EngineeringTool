@@ -384,7 +384,7 @@ def calculate_volume(entries1, entries2, entries3, entries4, entries5, entries6,
     writer.save()
     output.seek(0)  # 重新定位到开始
     response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = "attachment;filename=%s" % escape_uri_path('1-MassFraction.xlsx')
+    response['Content-Disposition'] = "attachment;filename=%s" % escape_uri_path('2-VolumeFraction.xlsx')
     response.write(output.getvalue())
     output.close()
 

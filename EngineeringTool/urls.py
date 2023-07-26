@@ -20,6 +20,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from .settings import MEDIA_URL, MEDIA_ROOT
+from django.contrib.staticfiles.urls import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,3 +32,5 @@ urlpatterns = [
     path('components/', include('components.urls')),
     path('robots.txt', views.robots_txt),
 ]
+
+urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

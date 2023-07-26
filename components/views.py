@@ -6,6 +6,7 @@ from io import BytesIO
 
 from django.shortcuts import render
 from .calculation import calculate_mass, calculate_volume
+from .upload import excel_generate
 
 VERSION = 'Engineering Toolbox 1.0.0'
 
@@ -64,6 +65,36 @@ def mass_view(request):
             response = calculate_mass(entries1, entries2, entries3, entries4, entries5, entries6, entries7, entries8, entries9, entries10,
                     entries11, entries12, entries13, entries14, entries15, entries16, entries17, entries18)
             return response
+
+
+# -------------------------------------------------------------
+# 函数名： mass_upload_view
+# 功能： 质量分数表格上传
+# -------------------------------------------------------------
+def mass_upload_view(request):
+    if request.method == 'GET':
+        dic = {'ver': VERSION}
+        return render(request, 'components/mass up.html', dic)
+    if request.method == 'POST':
+        if 'cal' in request.POST and request.FILES['upl']:
+            f = request.FILES['upl']
+            response = excel_generate(f, 'M')
+            return response
+
+
+# -------------------------------------------------------------
+# 函数名： volume_upload_view
+# 功能： 体积分数表格上传
+# -------------------------------------------------------------
+def volume_upload_view(request):
+    if request.method == 'GET':
+        dic = {'ver': VERSION}
+        return render(request, 'components/volume up.html', dic)
+    if request.method == 'POST':
+        if 'cal' in request.POST and request.FILES['upl']:
+            f = request.FILES['upl']
+            rep = excel_generate(f, 'V')
+            return rep
 
 
 # -------------------------------------------------------------
